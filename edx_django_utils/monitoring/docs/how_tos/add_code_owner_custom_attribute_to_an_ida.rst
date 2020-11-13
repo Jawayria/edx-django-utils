@@ -29,7 +29,7 @@ Celery tasks require use of a special decorator to set the ``code_owner`` custom
 Here is an example::
 
   @task()
-  @set_code_owner_attribute(__name__)
+  @set_code_owner_attribute
   def example_task():
       ...
 

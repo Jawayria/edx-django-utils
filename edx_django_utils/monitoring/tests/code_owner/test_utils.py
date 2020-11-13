@@ -12,7 +12,7 @@ from edx_django_utils.monitoring import get_code_owner_from_module, set_code_own
 from edx_django_utils.monitoring.internal.code_owner.utils import clear_cached_mappings
 
 
-@set_code_owner_attribute(__name__)
+@set_code_owner_attribute
 def decorated_function(pass_through):
     """
     For testing the set_code_owner_attribute decorator.

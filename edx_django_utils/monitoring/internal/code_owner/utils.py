@@ -139,7 +139,7 @@ def _set_code_owner_attribute_from_module(module):
         set_custom_attribute('code_owner', code_owner)
 
 
-def set_code_owner_attribute(module):
+def set_code_owner_attribute(wrapped_function):
     """
     Decorator to set the code_owner custom attribute for use with celery tasks.
 
@@ -149,18 +149,16 @@ def set_code_owner_attribute(module):
     Usage::
 
         @task()
-        @set_code_owner_attribute(__name__)
+        @set_code_owner_attribute
         def example_task():
             ...
 
     """
-    def actual_decorator(wrapped_function):
-        @wraps(wrapped_function)
-        def new_function(*args, **kwargs):
-            _set_code_owner_attribute_from_module(module)
-            return wrapped_function(*args, **kwargs)
-        return new_function
-    return actual_decorator
+    @wraps(wrapped_function)
+    def new_function(*args, **kwargs):
+        _set_code_owner_attribute_from_module(wrapped_function.__module__)
+        return wrapped_function(*args, **kwargs)
+    return new_function
 
 
 def clear_cached_mappings():
