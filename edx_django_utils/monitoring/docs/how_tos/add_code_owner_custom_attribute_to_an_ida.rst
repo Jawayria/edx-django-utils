@@ -21,6 +21,18 @@ Setting up the Middleware
 
 You simply need to add ``edx_django_utils.monitoring.CodeOwnerMonitoringMiddleware`` as described in the README to make this functionality available. Then it is ready to be configured.
 
+Handling celery tasks
+---------------------
+
+Celery tasks require use of a special decorator to set the ``code_owner`` custom attribute because no middleware will be run.
+
+Here is an example::
+
+  @task()
+  @set_code_owner_attribute(__name__)
+  def example_task():
+      ...
+
 Configuring your app settings
 -----------------------------
 

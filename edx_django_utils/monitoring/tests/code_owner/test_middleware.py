@@ -212,10 +212,12 @@ class CodeOwnerMetricMiddlewareTests(TestCase):
         CODE_OWNER_MAPPINGS={'team-red': ['*']},
     )
     @patch('edx_django_utils.monitoring.internal.code_owner.middleware.set_custom_attribute')
-    def test_catch_all_instead_of_errors(self, mock_set_custom_attribute):
+    def test_catch_all_with_errors(self, mock_set_custom_attribute):
         request = RequestFactory().get('/bad/path/')
         self.middleware(request)
-        self._assert_code_owner_custom_attributes(mock_set_custom_attribute, expected_code_owner='team-red')
+        self._assert_code_owner_custom_attributes(
+            mock_set_custom_attribute, has_path_error=True, has_transaction_error=True, expected_code_owner='team-red'
+        )
 
     @override_settings(
         CODE_OWNER_MAPPINGS=['invalid_setting_as_list'],
@@ -238,7 +240,7 @@ class CodeOwnerMetricMiddlewareTests(TestCase):
         if expected_code_owner:
             call_list.append(call('code_owner', expected_code_owner))
         if path_module:
-            call_list.append(call('code_owner_path_module', path_module))
+            call_list.append(call('code_owner_module', path_module))
         if has_path_error:
             call_list.append(call('code_owner_path_error', ANY))
         if transaction_name:

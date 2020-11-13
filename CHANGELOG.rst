@@ -15,6 +15,20 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[3.12.0] - 2020-11-12
+~~~~~~~~~~~~~~~~~~~~~
+
+Added
+_____
+
+* Added set_code_owner_attribute decorator for use with celery tasks.
+
+Updated
+_______
+
+* Cleaned up some of the code owner middleware code. In doing so, renamed custom attribute code_owner_path_module to code_owner_module. This may affect monitoring dashboards. Also slightly changed when error custom attributes are set.
+
+
 [3.11.0] - 2020-10-31
 ~~~~~~~~~~~~~~~~~~~~~
 
