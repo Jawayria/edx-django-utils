@@ -2,10 +2,9 @@
 
 language: python
 python:
-- 3.5
 - 3.8
 env:
-- TOXENV=django22
+- TOXENV=[django22,django30]
 - TOXENV=docs
 - TOXENV=quality
 
@@ -25,5 +24,5 @@ deploy:
   distributions: sdist bdist_wheel
   on:
     tags: true
-    python: 3.5
+    python: 3.8
     condition: $TOXENV = quality
